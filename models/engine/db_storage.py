@@ -6,6 +6,8 @@ from models.user import User
 from models.place import Place
 from models.city import City
 from models.state import State
+from models.review import Review
+from models.amenity import Amenity
 
 
 import os
@@ -26,13 +28,13 @@ class DBStorage:
         self.__engine = create_engine(db_url, pool_pre_ping=True)
 
         if env == "test":
-            Base.metadata.drop_all()
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """ query on the current database session all objects
             depending on the class name
         """
-        all_classes = ['User', 'State', 'City', 'Place']
+        all_classes = ['User', 'State', 'City', 'Place', 'Amenity', 'Review']
 
         dictionary = {}
 

@@ -51,8 +51,9 @@ class Place(BaseModel, Base):
     if getenv("HBNB_TYPE_STORAGE") == "db":
         reviews = relationship("Review", cascade="all, delete, \
                                delete-orphan", backref="place")
-        amenities = relationship("Amenity", cascade="all, delete, \
-                                 delete-orphan", backref="place")
+        amenities = relationship("Amenity", secondary=place_amenity,
+                                 viewonly=False,
+                                 back_populates="place_amenities")
     else:
         @property
         def reviews(self):
@@ -63,6 +64,8 @@ class Place(BaseModel, Base):
             for key in all_rev:
                 review = key.replace('.', ' ')
                 review = shlex.split(review)
+                if (review[0] == 'Review'):
+                    list_rev.append(all_rev[key])
             for rev in all_rev:
                 if (rev.place_id == self.id):
                     final_list.append(rev)
