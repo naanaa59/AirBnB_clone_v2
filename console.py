@@ -141,12 +141,12 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         params = args.split(" ")
-        if params[0] not in HBNBCommand.classes:
+        if params[0] not in self.classes:
             print("** class doesn't exist **")
             return
         else:
-            new_instance = HBNBCommand.classes[params[0]]()
-            if len(params) != 1:
+            new_instance = self.classes[params[0]]()
+            if len(params) > 1:
                 for arg in params[1:]:
                     if not re.match(r"^\S*=\S*$", arg):
                         continue
@@ -155,7 +155,8 @@ class HBNBCommand(cmd.Cmd):
                     if not re.match(r"^-?\d*\.\d*$|^-?\d*$|^\"\S*\"$", value):
                         continue
                     value = value.replace('_', " ")
-                    value = value.replace('"', '')
+                    # .replace('\\"', '"')[1:-1]
+                    value = value.replace('"', r'\"')
                     setattr(new_instance, key, value)
         storage.new(new_instance)
         storage.save()
