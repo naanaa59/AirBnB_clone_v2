@@ -45,7 +45,7 @@ class DBStorage:
         for obj in objs:
             key = f"{type(obj).__name__}.{obj.id}"
             try:
-                del(obj._sa_instance_state)
+                del (obj._sa_instance_state)
             except KeyError:
                 pass
             dictionary[key] = obj

@@ -2,9 +2,11 @@
 """ Place Module for HBNB project """
 
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
-from models.base_model import BaseModel
-from models.base_model import Base
-from models.user import User
+from models.base_model import BaseModel, Base
+from sqlalchemy.orm import relationship
+from os import getenv
+import models
+import shlex
 
 
 class Place(BaseModel, Base):
@@ -33,3 +35,34 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, default=0, nullable=False)
     latitude = Column(Float, nullable=False)
     longitude = Column(Float, nullable=False)
+    amenity_ids = []
+
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+        reviews = relationship("Review", cascade="all, delete, \
+                               delete-orphan", backref="place")
+        amenities = relationship("Amenity", cascade="all, delete, \
+                                 delete-orphan", backref="place")
+    else:
+        @property
+        def reviews(self):
+            """ returns list of reviews.id"""
+            list_rev = []
+            final_list = []
+            all_rev = models.storage.all()
+            for key in all_rev:
+                review = key.replace('.', ' ')
+                review = shlex.split(review)
+            for rev in all_rev:
+                if (rev.place_id == self.id):
+                    final_list.append(rev)
+            return final_list
+
+    @property
+    def amenities(self):
+        """ returns list of amenities id"""
+        return self.amenity_ids
+
+    @amenities.setter
+    def amenities(self, obj=None):
+        """ sets amenity ids to attribute"""
+        # if type(obj) is Amenity

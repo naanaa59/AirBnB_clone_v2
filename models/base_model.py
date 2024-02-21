@@ -54,7 +54,7 @@ class BaseModel:
         """Returns a string representation of the instance"""
         new_dict = self.__dict__
         try:
-            del(new_dict["_sa_instance_state"])
+            del (new_dict["_sa_instance_state"])
         except KeyError:
             pass
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
@@ -64,7 +64,7 @@ class BaseModel:
         """Returns a string representation of the instance"""
         new_dict = self.__dict__
         try:
-            del(new_dict["_sa_instance_state"])
+            del (new_dict["_sa_instance_state"])
         except KeyError:
             pass
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]

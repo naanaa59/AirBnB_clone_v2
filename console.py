@@ -4,7 +4,7 @@ import cmd
 import sys
 from models.base_model import BaseModel
 from models.engine.db_storage import DBStorage
-from models.__init__ import storage, type_storage
+from models import storage
 from models.user import User
 from models.place import Place
 from models.state import State
@@ -144,7 +144,7 @@ class HBNBCommand(cmd.Cmd):
         if params[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        
+
         new_instance = HBNBCommand.classes[params[0]]()
         if len(params) > 1:
             for arg in params[1:]:
