@@ -24,16 +24,16 @@ class DBStorage:
         env = os.getenv('HBNB_ENV')
         db_url = f"mysql+mysqldb://{db_user}:{db_pwd}@{db_hst}:3306/{db_name}"
         self.__engine = create_engine(db_url, pool_pre_ping=True)
-        
+
         if env == "test":
             Base.metadata.drop_all()
-    
+
     def all(self, cls=None):
         """ query on the current database session all objects
             depending on the class name
         """
         all_classes = ['User', 'State', 'City', 'Place']
-        
+
         dictionary = {}
 
         if cls is not None:
@@ -50,11 +50,11 @@ class DBStorage:
                 pass
             dictionary[key] = obj
         return dictionary
-        
+
     def new(self, obj):
         """ add a new obj to the current database"""
         self.__session.add(obj)
-        
+
     def save(self):
         """ commit all changes of the current database"""
         self.__session.commit()
@@ -66,12 +66,7 @@ class DBStorage:
 
     def reload(self):
         Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session_factory = sessionmaker(
+            bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
-
-        
-
-
-
-
