@@ -157,7 +157,7 @@ class HBNBCommand(cmd.Cmd):
                     if not re.match(r"^-?\d*\.\d*$|^-?\d*$|^\"\S*\"$", value):
                         continue
                     value = value.replace('_', " ")
-                    # .replace('\\"', '"')[1:-1]
+                    value = value.replace('"', '')
                     value = value.replace('"', r'\"')
                     setattr(new_instance, key, value)
         storage.new(new_instance)
