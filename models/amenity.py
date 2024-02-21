@@ -5,9 +5,10 @@ from models.base_model import Base
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 from models.place import place_amenity
+from models.place import Place
 
 
-class Amenity(BaseModel):
+class Amenity(BaseModel, Base):
     __tablename__ = "amenities"
     name = Column(String(128), nullable=False)
     place_amenities = relationship("Place", secondary=place_amenity)
