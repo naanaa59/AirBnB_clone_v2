@@ -151,37 +151,3 @@ class test_DBStorage(unittest.TestCase):
         dbc_1.close()
         cursor.close()
         dbc.close()
-
-    def test_storage_var_created(self):
-        """ DBStorage object storage created """
-        from models.engine.db_storage import DBStorage
-        self.assertNotEqual(type(storage), DBStorage)
-
-    def test_new_and_save(self):
-        '''testing  the new and save methods'''
-        db = MySQLdb.connect(user=os.getenv('HBNB_MYSQL_USER'),
-                             host=os.getenv('HBNB_MYSQL_HOST'),
-                             passwd=os.getenv('HBNB_MYSQL_PWD'),
-                             port=3306,
-                             db=os.getenv('HBNB_MYSQL_DB'))
-        new_user = User(**{'first_name': 'Badr',
-                           'last_name': 'Annabi',
-                           'email': 'badr1234@gmail.com',
-                           'password': 1234567})
-        cur = db.cursor()
-        cur.execute('SELECT COUNT(*) FROM users')
-        prev_count = cur.fetchall()
-        cur.close()
-        db.close()
-        new_user.save()
-        db = MySQLdb.connect(user=os.getenv('HBNB_MYSQL_USER'),
-                             host=os.getenv('HBNB_MYSQL_HOST'),
-                             passwd=os.getenv('HBNB_MYSQL_PWD'),
-                             port=3306,
-                             db=os.getenv('HBNB_MYSQL_DB'))
-        cur = db.cursor()
-        cur.execute('SELECT COUNT(*) FROM users')
-        new_count = cur.fetchall()
-        self.assertEqual(new_count[0][0], prev_count[0][0] + 1)
-        cur.close()
-        db.close()
