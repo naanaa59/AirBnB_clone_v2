@@ -46,7 +46,8 @@ def do_deploy(archive_path):
 
         run("sudo mkdir -p {}".format(new_path))
         run("sudo tar -zxf {} -C {}".format(server_archive, new_path))
-        run("sudo rm -rf {}".format(server_archive))
+        run("sudo rm  {}".format(server_archive))
+        run("sudo mv {}/web_static/* {}".format(new_path, new_path))
         run("sudo rm -rf /data/web_static/current")
         run("sudo ln -s {} /data/web_static/current".format(new_path))
 
