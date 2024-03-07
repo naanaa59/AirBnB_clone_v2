@@ -29,14 +29,14 @@ if [ ! -d "$folder_name5" ]; then
 	sudo mkdir "$folder_name5"
 fi
 # Create a simple HTML file to test config
-sudo echo "\
+echo "\
 <html>
   <head>
   </head>
   <body>
     Holberton School
   </body>
-</html>" > /data/web_static/releases/test/index.html
+</html>" | sudo tee /data/web_static/releases/test/index.html
 
 # Recreate symbolic link with every execution of this script
 symb_link="/data/web_static/current"
