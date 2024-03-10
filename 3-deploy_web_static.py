@@ -30,7 +30,7 @@ def do_pack():
 
         return archive
 
-    except Exception as e:
+    except:
         return None
 
 
@@ -58,7 +58,7 @@ def do_deploy(archive_path):
 
         # print("New version deployed!")
         return True
-    except Exception as e:
+    except:
         return False
 
 
@@ -74,5 +74,5 @@ def deploy():
             path = archive_path
     # print(archive_path)
         return do_deploy(path)
-    except Exception as e:
+    except:
         return False
