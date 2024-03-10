@@ -39,7 +39,7 @@ def do_deploy(archive_path):
         Deploys and distributes an archive to web servers
     """
 
-    if (os.path.exists(archive_path) is False):
+    if (os.path.isfile(archive_path) is False):
         return False
     try:
         put(archive_path, "/tmp/")
