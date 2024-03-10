@@ -10,6 +10,7 @@ import os
 
 env.hosts = ["54.158.203.28", "52.91.156.191"]
 env.user = "ubuntu"
+env.local_command_executed = False
 
 
 def do_pack():
@@ -19,12 +20,14 @@ def do_pack():
         the name of the folder is:
             web_static_<year><month><day><hour><minute><second>.tgz
     """
+
     try:
         local("mkdir -p versions")
         source_path = "web_static/"
         archive = "versions/web_static_{}.tgz".format(
-                time.strftime("%Y%m%d%H%M%S"))
+            time.strftime("%Y%m%d%H%M%S"))
         local("tar -czvf {} {}".format(archive, source_path))
+
         return archive
 
     except Exception as e:
@@ -62,8 +65,13 @@ def deploy():
     """
         creates and distributes an archive to your web servers
     """
+    global path
     try:
-        archive_path = do_pack()
-        return do_deploy(archive_path)
+        if not env.local_command_executed:
+            archive_path = do_pack()
+            env.local_command_executed = True
+            path = archive_path
+    # print(archive_path)
+        return do_deploy(path)
     except Exception as e:
         return False
