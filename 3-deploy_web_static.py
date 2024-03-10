@@ -66,13 +66,13 @@ def deploy():
     """
         creates and distributes an archive to your web servers
     """
-    global path
+    # global path
     try:
-        if not env.local_command_executed:
-            archive_path = do_pack()
-            env.local_command_executed = True
-            path = archive_path
+        # if not env.local_command_executed:
+        archive_path = do_pack()
+            # env.local_command_executed = True
+            # path = archive_path
     # print(archive_path)
-        return do_deploy(path)
+        return do_deploy(archive_path)
     except:
         return False
