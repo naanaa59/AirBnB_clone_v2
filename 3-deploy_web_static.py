@@ -39,7 +39,9 @@ def do_deploy(archive_path):
         Deploys and distributes an archive to web servers
     """
 
-    if os.path.exists(archive_path):
+    if (os.path.exists(archive_path) is False):
+        return False
+    try:
         put(archive_path, "/tmp/")
         archive_file = archive_path[9:]
         server_archive = "/tmp/{}".format(archive_file)
@@ -55,10 +57,9 @@ def do_deploy(archive_path):
         run("sudo ln -s {} /data/web_static/current".format(new_path))
 
         # print("New version deployed!")
-
         return True
-
-    return False
+    except Exception as e:
+        return False
 
 
 def deploy():
