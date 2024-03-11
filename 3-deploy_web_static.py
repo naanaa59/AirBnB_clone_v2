@@ -58,8 +58,8 @@ def do_deploy(archive_path):
 
     # print("New version deployed!")
     return True
-    #except Exception as e:
-        # return False
+    # except Exception as e:
+    # return False
 
 
 def deploy():
@@ -75,4 +75,4 @@ def deploy():
 # print(archive_path)
     return do_deploy(path)
     # except Exception as e:
-        # return False
+    # return False
