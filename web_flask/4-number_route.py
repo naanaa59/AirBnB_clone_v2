@@ -32,11 +32,9 @@ def python_text(text='is_cool'):
     return f"Python {text}"
 
 
-@app.route("/number/<n>")
+@app.route("/number/<int:n>")
 def number(n):
-    n = int(n)
-    if isinstance(n, int):
-        return f"{n} is a number"
+    return f"{n} is a number"
 
 
 if __name__ == "__main__":
