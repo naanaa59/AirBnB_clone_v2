@@ -5,6 +5,7 @@ from models.base_model import Base
 from models.city import City
 from sqlalchemy import Column, String
 from sqlalchemy.orm import sessionmaker, relationship
+import os
 
 
 class State(BaseModel, Base):
@@ -14,13 +15,10 @@ class State(BaseModel, Base):
     cities = relationship(
         "City", cascade="all, delete-orphan", backref="state")
 
-    @property
-    def cities(self):
-        """
-        returns the list of City instances with state_id
-        equals to the current State.id
-        """
-        Session = sessionmaker(bind=Base.metadata.bind)
-        with Session() as session:
-            cities = session.query(City).filter(City.state_id == self.id).all()
-        return cities
+    if not os.getenv('HBNB_TYPE_STORAGE') == "db":
+        @property
+        def cities(self):
+            from models import storage
+            cities_list = [city for _, city in storage.all("City").items()
+                           if city.state_id == self.id]
+            return cities_list
