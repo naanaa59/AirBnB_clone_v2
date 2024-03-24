@@ -18,10 +18,11 @@ def states_list():
 
 
 @app.teardown_appcontext
-def close(exception=None):
+def close(exc):
     """ remove current sqlalchemy session after each request """
     storage.close()
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000)
+    app.run(debug=True)
