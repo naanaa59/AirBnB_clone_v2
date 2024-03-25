@@ -13,8 +13,8 @@ app = Flask(__name__)
 @app.route("/states", strict_slashes=False)
 def states_list():
     """ a route to get all states from db storage """
-    states = storage.all(State).values()
-    return render_template("9-states.html", states=states)
+    states = storage.all(State)
+    return render_template("9-states.html", state=states)
 
 
 @app.route("/states/<id>", strict_slashes=False)
